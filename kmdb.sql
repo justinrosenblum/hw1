@@ -157,9 +157,9 @@ INSERT INTO movies (
     studio_id
 )
 VALUES
-("Batman Begins", 2005, "PG-13", "Warner Bros."),
-("The Dark Knight", 2008, "PG-13", "Warner Bros."),
-("The Dark Knight Rises", 2012, "PG-13", "Warner Bros.");
+("Batman Begins", 2005, "PG-13", 1),
+("The Dark Knight", 2008, "PG-13", 1),
+("The Dark Knight Rises", 2012, "PG-13", 1);
 
 INSERT INTO actors (
     name
@@ -204,6 +204,10 @@ VALUES ("Warner Bros.");
 
 -- The SQL statement for the movies output
 -- TODO!
+
+SELECT movies.name, movies.year_released, movies.MPAA_rating, studios.name
+FROM movies 
+INNER JOIN studios ON studios.id = movies.studio_id;
 
 -- Prints a header for the cast output
 .print ""
