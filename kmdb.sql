@@ -98,7 +98,7 @@
 -- Turns column mode on but headers off
 .mode column
 .headers off
-
+.width 21 20 20
 -- Drop existing tables, so you'll start fresh each time this script is run.
 -- TODO!
 
@@ -106,8 +106,6 @@ DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS studios;
 DROP TABLE IF EXISTS characters;
 DROP TABLE IF EXISTS actors;
---DROP TABLE IF EXISTS charactor_actor_associations;
-DROP TABLE IF EXISTS movie_cast_associations;
 -- Create new tables, according to your domain model
 -- TODO!
 
@@ -126,25 +124,14 @@ CREATE TABLE studios (
 
 CREATE TABLE characters (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT
+    name TEXT,
+    movie_id INTEGER,
+    actor_id INTEGER
 );
 
 CREATE TABLE actors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT
-);
-
---CREATE TABLE charactor_actor_associations (
-    --id INTEGER PRIMARY KEY AUTOINCREMENT,
-    --character_id INTEGER,
-    --actor_id INTEGER
---);
-
-CREATE TABLE movie_cast_associations (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    movie_id INTEGER,
-    character_id INTEGER,
-    actor_id INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
@@ -179,26 +166,26 @@ VALUES
 ("Anne Hathaway");
 
 INSERT INTO characters (
-    name
-)
-VALUES
-("Bruce Wayne"),
-("Alfred"),
-("Ra's Al Ghul"),
-("Rachel Dawes"),
-("Commissioner Gordon"),
-("Joker"),
-("Harvey Dent"),
-("Bane"),
-("John Blake"),
-("Selina Kyle");
-
-INSERT INTO movie_cast_associations (
+    name,
     movie_id,
-    character_id,
     actor_id
 )
-VALUES (1, 1, 1), (1, 2, 2), (1, 3, 3), (1, 4, 4), (1, 5, 5), (2, 1, 1), (2, 6, 6), (2, 7, 7), (2, 2, 2), (2, 4, 8), (3, 1, 1), (3, 5, 5), (3, 8, 9), (3, 9, 10), (3, 10, 11);
+VALUES
+("Bruce Wayne", 1, 1),
+("Alfred", 1, 2),
+("Ra's Al Ghul", 1, 3),
+("Rachel Dawes", 1, 4),
+("Commissioner Gordon", 1, 5),
+("Bruce Wayne", 2, 1),
+("Joker", 2, 6),
+("Harvey Dent", 2, 7),
+("Alfred", 2, 2),
+("Rachel Dawes", 2, 8),
+("Bruce Wayne", 3, 1),
+("Commissioner Gordon", 3, 5),
+("Bane", 3, 9),
+("John Blake", 3, 10),
+("Selina Kyle", 3, 11);
 
 INSERT INTO studios (
     name
@@ -227,7 +214,6 @@ INNER JOIN studios ON studios.id = movies.studio_id;
 -- The SQL statement for the cast output
 -- TODO!
 SELECT movies.name, actors.name, characters.name
-FROM movie_cast_associations
-INNER JOIN movies ON movies.id = movie_cast_associations.movie_id
-INNER JOIN characters ON characters.id = movie_cast_associations.character_id
-INNER JOIN actors ON actors.id = movie_cast_associations.actor_id;
+FROM characters
+INNER JOIN movies ON movies.id = characters.movie_id
+INNER JOIN actors ON actors.id = characters.actor_id;
