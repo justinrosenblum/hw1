@@ -106,7 +106,7 @@ DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS studios;
 DROP TABLE IF EXISTS characters;
 DROP TABLE IF EXISTS actors;
-DROP TABLE IF EXISTS charactor_actor_associations;
+--DROP TABLE IF EXISTS charactor_actor_associations;
 DROP TABLE IF EXISTS movie_cast_associations;
 -- Create new tables, according to your domain model
 -- TODO!
@@ -134,16 +134,17 @@ CREATE TABLE actors (
     name TEXT
 );
 
-CREATE TABLE charactor_actor_associations (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    character_id INTEGER,
-    actor_id INTEGER
-);
+--CREATE TABLE charactor_actor_associations (
+    --id INTEGER PRIMARY KEY AUTOINCREMENT,
+    --character_id INTEGER,
+    --actor_id INTEGER
+--);
 
 CREATE TABLE movie_cast_associations (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     movie_id INTEGER,
-    charactor_actor_association_id INTEGER
+    character_id INTEGER,
+    actor_id INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
@@ -192,6 +193,13 @@ VALUES
 ("John Blake"),
 ("Selina Kyle");
 
+INSERT INTO movie_cast_associations (
+    movie_id,
+    character_id,
+    actor_id
+)
+VALUES (1, 1, 1), (1, 2, 2), (1, 3, 3), (1, 4, 4), (1, 5, 5), (2, 1, 1), (2, 6, 6), (2, 7, 7), (2, 2, 2), (2, 4, 8), (3, 1, 1), (3, 5, 5), (3, 8, 9), (3, 9, 10), (3, 10, 11);
+
 INSERT INTO studios (
     name
 )
@@ -218,3 +226,8 @@ INNER JOIN studios ON studios.id = movies.studio_id;
 
 -- The SQL statement for the cast output
 -- TODO!
+SELECT movies.name, actors.name, characters.name
+FROM movie_cast_associations
+INNER JOIN movies ON movies.id = movie_cast_associations.movie_id
+INNER JOIN characters ON characters.id = movie_cast_associations.character_id
+INNER JOIN actors ON actors.id = movie_cast_associations.actor_id;
