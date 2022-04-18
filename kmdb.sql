@@ -210,7 +210,6 @@ INNER JOIN studios ON studios.id = movies.studio_id;
 .print "========"
 .print ""
 
-
 -- The SQL statement for the cast output
 -- TODO!
 SELECT movies.name, actors.name, characters.name
