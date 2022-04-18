@@ -150,6 +150,53 @@ CREATE TABLE movie_cast_associations (
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
 
+INSERT INTO movies (
+    name,
+    year_released,
+    MPAA_rating,
+    studio_id
+)
+VALUES
+("Batman Begins", 2005, "PG-13", "Warner Bros."),
+("The Dark Knight", 2008, "PG-13", "Warner Bros."),
+("The Dark Knight Rises", 2012, "PG-13", "Warner Bros.");
+
+INSERT INTO actors (
+    name
+)
+VALUES
+("Christian Bale"),
+("Michael Caine"),
+("Liam Neeson"),
+("Katie Holmes"),
+("Gary Oldman"),
+("Heath Ledger"),
+("Aaron Eckhart"),
+("Maggie Gyllenhaal"),
+("Tom Hardy"),
+("Joseph Gordon-Levitt"),
+("Anne Hathaway");
+
+INSERT INTO characters (
+    name
+)
+VALUES
+("Bruce Wayne"),
+("Alfred"),
+("Ra's Al Ghul"),
+("Rachel Dawes"),
+("Commissioner Gordon"),
+("Joker"),
+("Harvey Dent"),
+("Bane"),
+("John Blake"),
+("Selina Kyle");
+
+INSERT INTO studios (
+    name
+)
+VALUES ("Warner Bros.");
+
 -- Prints a header for the movies output
 .print "Movies"
 .print "======"
